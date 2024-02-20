@@ -15,7 +15,7 @@ project(
 #
 
 include(cmake/StandardSettings.cmake)
-include(cmake/StaticAnalyzers.cmake)
+#include(cmake/StaticAnalyzers.cmake)
 include(cmake/Utils.cmake)
 if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE "Debug")
@@ -51,8 +51,8 @@ endif()
 # Enable package managers
 #
 
-include(cmake/Conan.cmake)
-include(cmake/Vcpkg.cmake)
+#include(cmake/Conan.cmake)
+#include(cmake/Vcpkg.cmake)
 
 #
 # Create library, setup header and source files
@@ -60,7 +60,7 @@ include(cmake/Vcpkg.cmake)
 
 # Find all headers and implementation files
 include(cmake/SourcesAndHeaders.cmake)
-
+#
 if(${PROJECT_NAME}_BUILD_EXECUTABLE)
   add_executable(${PROJECT_NAME} ${exe_sources})
 
@@ -240,7 +240,7 @@ verbose_message("Project is now aliased as ${PROJECT_NAME}::${PROJECT_NAME}.\n")
 # Format the project using the `clang-format` target (i.e: cmake --build build --target clang-format)
 #
 
-add_clang_format_target()
+#add_clang_format_target()
 
 #
 # Install library for easy downstream inclusion

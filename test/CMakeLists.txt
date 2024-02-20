@@ -43,15 +43,31 @@ foreach(file ${test_sources})
   endif()
 
   if(${CMAKE_PROJECT_NAME}_USE_GTEST)
-    find_package(GTest REQUIRED)
+    #find_package(GTest REQUIRED)
+    ######## MY CODE START ###############
+    include(FetchContent)
+    FetchContent_Declare(
+    googletest
+    GIT_REPOSITORY https://github.com/google/googletest.git
+    GIT_TAG        v1.14.0
+    )
+    # For Windows: Prevent overriding the parent project's compiler/linker settings
+    set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+    FetchContent_MakeAvailable(googletest)
+    add_library(GTest::GTest INTERFACE IMPORTED)
+    add_library(GTest::Main INTERFACE IMPORTED)
+    target_link_libraries(GTest::GTest INTERFACE gtest_main)
 
+    ######## MY CODE END ###############
     if(${CMAKE_PROJECT_NAME}_USE_GOOGLE_MOCK)
       set(GOOGLE_MOCK_LIBRARIES GTest::gmock GTest::gmock_main)
     endif()
-
+    #target_link_libraries(${test_name}_Tests PRIVATE GTest::GTest)
+    #target_link_libraries(${test_name}_Tests PRIVATE GTest::Main)
+    #target_link_libraries(${test_name}_Tests ${GOOGLE_MOCK_LIBRARIES})
     target_link_libraries(
-      ${test_name}_Tests
-      PUBLIC
+        ${test_name}_Tests
+        PUBLIC
         GTest::GTest
         GTest::Main
         ${GOOGLE_MOCK_LIBRARIES}
@@ -72,6 +88,9 @@ foreach(file ${test_sources})
   #
   # Add the unit tests
   #
+
+    
+
 
   add_test(
     NAME
